@@ -18,8 +18,16 @@
  ![laravel_task_env](https://github.com/kamblejeevan/laravel10-ecom-task/assets/28289772/27d43fa6-273d-4dbe-b4e2-730156fbb68b)<br> 
 7. Finally, run the command "php artisan config:clear." This step is essential; otherwise, the changes may not take effect when using the API.
 
-<h2>Import User and Product data from csv file</h2>
+<h2>Import users and products data from csv file</h2>
 Use Below Commands to import the data for users and products
 
 1. php artisan import:products {path to csv file} - replace path with /var/www/html/test_product.csv
 2. php artisan import:users {path to csv file} - replace path with /var/www/html/test_users.csv
+
+<h2>Api's</h2>
+
+1. login and register api's
+2. Products CRUD Api's
+3. Add and remove Cart and Wishlist Api's
+5. Order CRUD Api'.
+6. Payment Api's
