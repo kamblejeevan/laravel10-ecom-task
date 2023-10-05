@@ -20,3 +20,13 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+
+I have completed the assigned task. You can view the code on my GitHub repository at https://github.com/kamblejeevan/laravel10-ecom-task. I have provided detailed instructions in the GitHub README file.
+
+Additionally, I have provided a Postman collection. In Postman, set the url as an environment variable. For example, use http://127.0.0.1:8000/api/ as the url in the environment.
+
+I have organized the collection into a folder. When using the collection, be sure to include the bearer token for accessing other APIs. You can obtain the bearer token after logging in. To register a user, use the register API and add a user.
+
+Please let me know if you have any questions or need assistance with anything else.
+
+

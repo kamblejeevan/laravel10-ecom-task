@@ -86,7 +86,6 @@ class CartController extends Controller
         $input = $request->all();
     
         $validator = Validator::make($input, [
-            'user_id' => 'required|exists:users,id',
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1'
         ]);
@@ -97,7 +96,8 @@ class CartController extends Controller
             ]);
         }
         try{
-            $cart = Cart::create($input);
+            $request->request->add(['user_id' => Auth::user()->id]);
+            $cart = Cart::create($request->all());
             return response()->json([
                 'success' => true,
                 'message' => 'Product Added to Cart Successfully',
@@ -131,7 +131,6 @@ class CartController extends Controller
         $input = $request->all();
        
         $validator = Validator::make($input, [
-            'user_id' => 'sometimes|required|exists:users,id',
             'product_id' => 'sometimes|required|exists:products,id',
             'quantity' => 'sometimes|required|integer|min:1'
 
@@ -151,6 +150,7 @@ class CartController extends Controller
             ], 500);
         }
         try{
+            $request->request->add(['user_id' => Auth::user()->id]);
             $updated = $cart->fill($request->all())->save();
             if ($updated)
             return response()->json([

@@ -85,20 +85,9 @@ class OrderController extends Controller
     * during
     */
     public function store(Request $request) {
-        $input = $request->all();
-       
-        $validator = Validator::make($input, [
-            'user_id' => 'required|exists:users,id',
-        ]);
-        if($validator->fails()) {
-            return response()->json([
-                'message' => 'Validation Error',
-                'validate_err'=> $validator->messages(),
-            ]);
-        }
-        $request->request->add(['status' => 3]);
+        $data_arr = ['user_id'=>Auth::user()->id,'status' => 3];
         try{
-            $order = Order::create($request->all());
+            $order = Order::create($data_arr);
             $carts = Cart::where('user_id',Auth::user()->id)->get();
             if(!$carts){
                 return response()->json([
