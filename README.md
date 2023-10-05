@@ -27,8 +27,8 @@
 
 Use Below Commands to import the data for users and products
 
-1. php artisan import:products {path} - For example replace {path} with "php artisan import:products /var/www/html/test_product.csv"
-2. php artisan import:users {path} - For example replace {path} with "php artisan import:products /var/www/html/test_users.csv"
+1. php artisan import:products {path} - For example "php artisan import:products /var/www/html/test_product.csv"
+2. php artisan import:users {path} - For example "php artisan import:products /var/www/html/test_users.csv"
 
 <h2>Api's</h2>
 
