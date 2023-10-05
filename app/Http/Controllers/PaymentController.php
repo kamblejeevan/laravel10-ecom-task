@@ -13,8 +13,21 @@ use Illuminate\Support\Facades\Http;
 
 class PaymentController extends Controller
 {
-    public function fetch_payment_details($id)
-    {
+    /**
+     * The function fetches payment details based on the provided ID and returns a JSON response with
+     * the payment data or an error message.
+     * 
+     * @author Jeevan
+     * 
+     * @param id The parameter "id" is the identifier of the payment that you want to fetch the details
+     * for. It is used to find the payment record in the database.
+     * 
+     * @return a JSON response. If the payment is found successfully, it will return a JSON object with
+     * the 'success' key set to true and the 'data' key set to the payment details. If an exception
+     * occurs, it will return a JSON object with the 'success' key set to true and the 'message' key
+     * set to "something went wrong".
+     */
+    public function fetch_payment_details($id) {
         try{
             $payment = Payment::find($id);
             return response()->json([
@@ -29,9 +42,24 @@ class PaymentController extends Controller
         }  
     }
 
-    public function place_order(Request $request)
-    {
-        // Validate the request data
+    /**
+     * The function `place_order` is responsible for validating the request data, creating a payment
+     * intent, confirming the payment, and updating the order and payment records accordingly.
+     * 
+     * @author Jeevan
+     * 
+     * @param Request request The `` parameter is an instance of the `Illuminate\Http\Request`
+     * class. It represents the HTTP request made to the server and contains all the data and
+     * information sent with the request.
+     * 
+     * @return a JSON response. If the order is not found, it returns a JSON response with a success
+     * status of false and a message indicating that the order was not found. If there is a failure in
+     * creating the payment intent or confirming the payment, it returns a JSON response with an error
+     * message. If the payment is successfully initiated, it returns a JSON response with a message
+     * indicating that the
+     */
+    public function place_order(Request $request) {
+        
         $request->validate([
             'order_id' => 'required|integer'
         ]);

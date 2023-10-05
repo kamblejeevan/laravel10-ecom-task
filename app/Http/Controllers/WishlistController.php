@@ -10,8 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
-    public function index()
-    {
+    /**
+     * The index function retrieves the user's wishlist and returns it as a JSON response, excluding
+     * the user and product details.
+     * 
+     * @author Jeevan
+     * 
+     * @return a JSON response. If the try block is successful, it will return a JSON object with the
+     * keys 'success' set to true and 'data' containing the user's wishlist. The 'data' key will have
+     * the 'user' and 'product' attributes hidden. If an exception occurs, it will return a JSON object
+     * with the keys 'success' set to false and '
+     */
+    public function index() {
         try{
             $user_wishlist = Wishlist::where('user_id',Auth::user()->id)->get();
             return response()->json([
@@ -26,8 +36,19 @@ class WishlistController extends Controller
         }
     }
 
-    public function show($id)
-    {
+    /**
+     * The function retrieves a wishlist by its ID and returns a JSON response with the wishlist data,
+     * excluding the user and product information.
+     * 
+     * @author Jeevan
+     * 
+     * @param id The parameter "id" is the identifier of the wishlist that we want to retrieve and
+     * show. It is used to find the wishlist record in the database.
+     * 
+     * @return a JSON response. If the wishlist is found, it will return a success response with the
+     * wishlist data. If the wishlist is not found, it will return an error response.
+     */
+    public function show($id) {
        $wishlist = Wishlist::find($id);
  
         if (!$wishlist) {
@@ -43,8 +64,23 @@ class WishlistController extends Controller
         ], 400);
     }
  
-    public function store(Request $request)
-    {
+    /**
+     * The function stores a wishlist item in the database and returns a JSON response indicating
+     * success or failure.
+     * 
+     * @author Jeevan
+     * 
+     * @param Request request The  parameter is an instance of the Request class, which
+     * represents an HTTP request. It contains all the data and information about the incoming request,
+     * such as the request method, headers, and request payload.
+     * 
+     * @return a JSON response. If the validation fails, it returns a JSON response with a "Validation
+     * Error" message and the validation errors. If the creation of the wishlist is successful, it
+     * returns a JSON response with a "success" message and a "Product Added to Wishlist Successfully"
+     * message. If there is an exception thrown during the creation of the wishlist, it returns a JSON
+     * response with
+     */
+    public function store(Request $request) {
         $input = $request->all();
        
         $validator = Validator::make($input, [
@@ -111,8 +147,20 @@ class WishlistController extends Controller
         }  
     }
  
-    public function destroy($id)
-    {
+    /**
+     * The function destroys a wishlist item by finding it based on the provided ID, and returns a JSON
+     * response indicating success or failure.
+     * 
+     * @author Jeevan
+     * 
+     * @param id The parameter `` represents the ID of the wishlist item that needs to be deleted.
+     * 
+     * @return a JSON response. If the wishlist is found and successfully deleted, it will return a
+     * success message with a status code of 400. If the wishlist is not found, it will return a
+     * failure message with a status code of 400. If there is an error while deleting the wishlist, it
+     * will return a failure message with a status code of 500.
+     */
+    public function destroy($id) {
         $wishlist = Wishlist::find($id);
  
         if (!$wishlist) {
@@ -125,8 +173,8 @@ class WishlistController extends Controller
         if ($wishlist->delete()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Wishlist deleted successfully'
-            ]);
+                'message' => 'Removed Product from the Wishlist'
+            ], 400);
         } else {
             return response()->json([
                 'success' => false,

@@ -27,9 +27,12 @@ class ProductsImport implements ToModel, WithValidation, WithHeadingRow, SkipsOn
      * @return \Illuminate\Database\Eloquent\Model|null
      */
 
+     /**
+      * The function logs failure data in JSON format for further analysis.
+      */
      public function onFailure(Failure ...$failures)
-     {
-         foreach ($failures as $failure) {
+    {
+        foreach ($failures as $failure) {
              $failureData[] = [
                  'row' => $failure->row(),
                  'attribute' => $failure->attribute(),
@@ -39,7 +42,7 @@ class ProductsImport implements ToModel, WithValidation, WithHeadingRow, SkipsOn
          }
          $log_data = json_encode($failureData);
          Log::channel('productlog')->info($log_data);
-     }
+    }
 
     public function rules(): array
     {
@@ -48,6 +51,12 @@ class ProductsImport implements ToModel, WithValidation, WithHeadingRow, SkipsOn
             'price' => 'required|numeric'
         ];
     }
+
+   /**
+    * The function "headingRow" returns the row number of the heading in a spreadsheet.
+    * 
+    * @return int the integer value 1.
+    */
     public function headingRow(): int
     {
         return 1;

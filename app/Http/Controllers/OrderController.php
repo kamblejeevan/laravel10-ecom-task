@@ -14,8 +14,18 @@ use Carbon\Carbon;
 
 class OrderController extends Controller
 {
-    public function index()
-    {
+    /**
+     * The index function retrieves orders with their payment and order items for the authenticated
+     * user and returns a JSON response with the data.
+     * 
+     * @author Jeevan
+     * 
+     * @return a JSON response. If the try block is successful, it will return a JSON response with a
+     * 'success' key set to true, and a 'data' key containing the orders. The 'user' attribute of each
+     * order will be hidden in the response. If there is an exception caught in the try block, it will
+     * return a JSON response with a 'success' key set
+     */
+    public function index() {
         try{
             $orders = Order::with('payment','orderItems')->where('user_id',Auth::user()->id)->get();
             return response()->json([
@@ -30,8 +40,20 @@ class OrderController extends Controller
         }  
     }
 
-    public function show($id)
-    {
+   /**
+    * The function retrieves an order by its ID and returns a JSON response with the order data if
+    * found, or an error message if not found.
+    * 
+    * @author Jeevan
+    * 
+    * @param id The parameter "id" is the identifier of the order that we want to retrieve and display.
+    * It is used to find the order in the database using the "find" method of the "Order" model.
+    * 
+    * @return a JSON response. If the order is found, it will return a success response with the order
+    * data. If the order is not found, it will return an error response with a message indicating that
+    * the order was not found.
+    */
+    public function show($id) {
        $order = Order::find($id);
         if (!$order) {
             return response()->json([
@@ -46,8 +68,23 @@ class OrderController extends Controller
         ], 400);
     }
 
-    public function store(Request $request)
-    {
+   /**
+    * The function "store" in PHP creates an order with validation, calculates the total amount based
+    * on the products in the cart, and saves the order items.
+    * 
+    * @author Jeevan
+    * 
+    * @param Request request The  parameter is an instance of the Request class, which
+    * represents an HTTP request. It contains all the data and information about the request, such as
+    * the request method, headers, and input data.
+    * 
+    * @return a JSON response. If the validation fails, it returns a JSON response with a "Validation
+    * Error" message and the validation errors. If the cart is empty, it returns a JSON response with a
+    * "Cart is empty include atleast one item" message. If the order is created successfully, it
+    * returns a JSON response with a "Order Created Successfully" message. If something goes wrong
+    * during
+    */
+    public function store(Request $request) {
         $input = $request->all();
        
         $validator = Validator::make($input, [
@@ -97,8 +134,21 @@ class OrderController extends Controller
        }  
     }
 
-    public function destroy($id)
-    {
+    /**
+     * The function "destroy" deletes an order with the given ID and returns a JSON response indicating
+     * the success or failure of the deletion.
+     * 
+     * @author Jeevan
+     * 
+     * @param id The parameter "id" is the identifier of the order that needs to be deleted. It is used
+     * to find the specific order in the database and delete it.
+     * 
+     * @return a JSON response. If the order is found and successfully deleted, it will return a JSON
+     * response with 'success' set to true and 'message' set to 'Order Deleted Successfully'. If the
+     * order is not found, it will return a JSON response with 'success' set to false and 'message' set
+     * to 'data not found'. If the order cannot be deleted for some
+     */
+    public function destroy($id) {
         $order = Order::find($id);
         if (!$order) {
             return response()->json([
@@ -115,7 +165,7 @@ class OrderController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Order Deleted Successfully'
+                'message' => 'order can not be deleted'
             ], 500);
         }
     }

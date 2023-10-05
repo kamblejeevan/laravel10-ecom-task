@@ -29,7 +29,11 @@ class UsersImport implements ToModel, WithValidation, WithHeadingRow, SkipsOnErr
      * @return \Illuminate\Database\Eloquent\Model|null
      */
 
-     public function onFailure(Failure ...$failures)
+   /**
+    * The function logs information about failures, including the row, attribute, values, and errors,
+    * in a JSON format.
+    */
+    public function onFailure(Failure ...$failures)
      {
          foreach ($failures as $failure) {
              $failureData[] = [
@@ -51,6 +55,11 @@ class UsersImport implements ToModel, WithValidation, WithHeadingRow, SkipsOnErr
         ];
     }
 
+    /**
+     * The function "headingRow" returns the row number of the heading in a table.
+     * 
+     * @return int the integer value 1.
+     */
     public function headingRow(): int
     {
         return 1;
